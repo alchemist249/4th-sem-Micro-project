@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+    <nav>
+        <h1>HealthBridge</h1>
+
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="basics.html">Healthcare Basics</a></li>
+            <li><a href="login.html">NGO Login</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+    </nav>
+</header>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="dashboard">
+    <h2>Create Healthcare Drive</h2>
+
+    <form id="driveForm">
+        <input type="text" id="driveTitle" placeholder="Drive Title" required>
+        <input type="text" id="driveLocation" placeholder="Location" required>
+        <input type="text" id="driveInstitution" placeholder="Institution" required>
+        <input type="date" id="driveDate" required>
+
+        <textarea id="driveDescription" placeholder="Description"></textarea>
+
+        <button type="submit">Create Drive</button>
+    </form>
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

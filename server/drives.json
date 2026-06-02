@@ -1,0 +1,64 @@
+[
+  {
+    "id": 1,
+    "title": "Blood Donation Camp",
+    "location": "Karimganj",
+    "institution": "Barak Valley Engineering College",
+    "month": "June",
+    "type": "Blood Donation",
+    "date": "2026-06-15",
+    "description": "Free blood donation drive."
+  },
+  {
+    "id": 2,
+    "title": "Eye Checkup Camp",
+    "location": "Silchar",
+    "institution": "NIT Silchar",
+    "month": "July",
+    "type": "Eye Camp",
+    "date": "2026-07-05",
+    "description": "Free eye testing."
+  },
+  {
+    "id": 3,
+    "title": "Vaccination Drive",
+    "location": "Silchar",
+    "institution": "Assam University",
+    "month": "August",
+    "type": "Vaccination",
+    "date": "2026-08-10",
+    "description": "Community vaccination program."
+  },
+  {
+    "id": 4,
+    "title": "Dental Camp",
+    "location": "Silchar",
+    "institution": "NIT Silchar",
+    "month": "June",
+    "type": "Dental",
+    "date": "2026-06-22",
+    "description": "Free dental checkup."
+  },
+  {
+    "title": "free health check ",
+    "location": "JEC",
+    "date": "2026-07-03",
+    "description": "FGHJ"
+  },
+  {
+    "title": "BVEC health check up",
+    "location": "Guwahati",
+    "institution": "AEC",
+    "date": "2026-06-06",
+    "month": "June",
+    "description": "healthy drive"
+  },
+  {
+    "title": "Pharma Check Up",
+    "location": "Karimganj",
+    "institution": "BVEC",
+    "date": "2026-06-04",
+    "month": "June",
+    "description": "General pharma check up"
+  }
+]
