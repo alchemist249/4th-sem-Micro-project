@@ -108,7 +108,7 @@ nav a:hover {
     margin-bottom: 10px;
 }
 
-/* FORM CONTAINERS */
+
 
 .form-container,
 .dashboard {
@@ -127,7 +127,7 @@ nav a:hover {
     color: #0a5eb0;
 }
 
-/* FORMS */
+
 
 form {
     display: flex;
@@ -161,7 +161,7 @@ button:hover {
     background: #084a8c;
 }
 
-/* DRIVES PAGE */
+
 
 .page-title {
     text-align: center;
@@ -205,7 +205,7 @@ button:hover {
     width: 100%;
 }
 
-/* ABOUT PAGE */
+
 
 .about {
     max-width: 900px;
@@ -229,7 +229,7 @@ button:hover {
     color: #444;
 }
 
-/* FOOTER */
+
 
 footer {
     text-align: center;
@@ -238,7 +238,7 @@ footer {
     font-size: 1rem;
 }
 
-/* RESPONSIVE DESIGN */
+
 
 @media (max-width: 768px) {
 
@@ -327,7 +327,7 @@ footer {
 }
 
 .card-icon {
-    font-size: 3rem;   /* Make emoji larger */
+    font-size: 3rem;   
     margin: 10px 0;
     text-align: center;
 }

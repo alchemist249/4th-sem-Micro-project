@@ -58,7 +58,6 @@ if (loginForm) {
     );
 }
 
-// Create Healthcare Drive
 const driveForm = document.getElementById("driveForm");
 
 if (driveForm) {
@@ -112,7 +111,6 @@ if (driveForm) {
 }
 
 
-// Display Healthcare Drives
 
 const drivesContainer = document.getElementById("drivesContainer");
 
@@ -133,7 +131,7 @@ if (drivesContainer) {
     const filterBtn =
         document.getElementById("applyFilter");
 
-    // Configure filter dropdown
+    
     if (dropdown && filterTitle) {
 
         if (filterType === "institution") {
@@ -262,7 +260,7 @@ if (drivesContainer) {
         });
     }
 
-    // Apply filter button
+
     if (filterBtn) {
 
         filterBtn.addEventListener("click", () => {
@@ -283,7 +281,7 @@ if (drivesContainer) {
         });
     }
 
-    // Initial load
+
     loadDrives();
 }
 

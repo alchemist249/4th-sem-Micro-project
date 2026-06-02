@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-/* -------------------- DRIVES -------------------- */
+
 
 function getDrives() {
 
@@ -27,7 +27,7 @@ function saveDrives(drives) {
 
 }
 
-/* -------------------- NGOS -------------------- */
+
 
 function getNGOs() {
 
@@ -46,7 +46,7 @@ function saveNGOs(ngos) {
     );
 
 }
-/* -------------------- Volunteers -------------------- */
+
 
 function getVolunteers() {
 
@@ -66,7 +66,7 @@ function saveVolunteers(volunteers) {
 
 }
 
-/* -------------------- ROUTES -------------------- */
+
 
 app.get("/", (req, res) => {
 
@@ -74,7 +74,7 @@ app.get("/", (req, res) => {
 
 });
 
-/* GET ALL / FILTER DRIVES */
+
 
 app.get("/drives", (req, res) => {
 
@@ -117,7 +117,7 @@ app.get("/drives", (req, res) => {
 
 });
 
-/* CREATE DRIVE */
+
 
 app.post("/create-drive", (req, res) => {
 
@@ -149,7 +149,7 @@ app.post("/create-drive", (req, res) => {
 
 });
 
-/* NGO SIGNUP */
+
 
 app.post("/signup", (req, res) => {
 
@@ -190,7 +190,7 @@ app.post("/signup", (req, res) => {
 
 });
 
-/* NGO LOGIN */
+
 
 app.post("/login", (req, res) => {
 
@@ -224,7 +224,7 @@ app.post("/login", (req, res) => {
 
 });
 
-/* START SERVER */
+
 
 app.listen(3000, () => {
 
