@@ -300,4 +300,7 @@ app.listen(3000, () => {
     console.log("Server running on port 3000");
 
 });
+<<<<<<< HEAD
 //debugginf
+=======
+>>>>>>> e495caa6c08ffa560d2c98b9099db81d8e5c4785
