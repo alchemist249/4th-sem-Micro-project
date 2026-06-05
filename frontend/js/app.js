@@ -21,7 +21,7 @@ if (loginForm) {
 
             const response =
                 await fetch(
-                    "http://localhost:3000/login",
+                    "https://fourth-sem-micro-project.onrender.com/login",
                     {
                         method: "POST",
                         headers: {
@@ -82,7 +82,7 @@ if (driveForm) {
         try {
 
             const response = await fetch(
-                "http://localhost:3000/create-drive",
+                "https://fourth-sem-micro-project.onrender.com/create-drive",
                 {
                     method: "POST",
                     headers: {
@@ -186,7 +186,7 @@ if (drivesContainer) {
         }
     }
 
-    async function loadDrives(url = "http://localhost:3000/drives") {
+    async function loadDrives(url = "https://fourth-sem-micro-project.onrender.com/drives") {
 
         try {
 
@@ -269,7 +269,7 @@ if (drivesContainer) {
                 dropdown.value;
 
             let url =
-                "http://localhost:3000/drives";
+                "https://fourth-sem-micro-project.onrender.com/drives";
 
             if (value && filterType) {
 
@@ -314,7 +314,7 @@ if (signupForm) {
 
             const response =
                 await fetch(
-                    "http://localhost:3000/signup",
+                    "https://fourth-sem-micro-project.onrender.com/signup",
                     {
                         method: "POST",
                         headers: {
