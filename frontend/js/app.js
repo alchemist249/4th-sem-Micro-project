@@ -540,3 +540,53 @@ function closeModal() {
 document.getElementById("modalOverlay")?.addEventListener("click", function(e) {
   if (e.target === this) closeModal();
 });
+
+const patientForm = document.getElementById("patientForm");
+
+if (patientForm) {
+    patientForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const params = new URLSearchParams(window.location.search);
+        const driveId = params.get("driveId");
+
+        if (!driveId) {
+            alert("Error: No healthcare drive selected. Please select a drive from the home page.");
+            return;
+        }
+
+       
+        const patient = {
+            drive: driveId,
+            patientName: document.getElementById("patientName").value,
+            age: document.getElementById("patientAge").value,
+            healthConcern: document.getElementById("patientConcern").value
+        };
+
+        try {
+            
+            const response = await fetch(
+                "https://fourth-sem-micro-project.onrender.com/register-patient",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(patient)
+                }
+            );
+
+            const result = await response.json();
+
+            alert(result.message);
+
+            if (response.status === 201) {
+                patientForm.reset(); 
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert("Could not connect to backend server.");
+        }
+    });
+}
