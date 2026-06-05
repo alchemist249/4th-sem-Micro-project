@@ -560,7 +560,7 @@ if (patientForm) {
             drive: driveId,
             patientName: document.getElementById("patientName").value,
             age: document.getElementById("patientAge").value,
-            healthConcern: document.getElementById("patientConcern").value
+            healthConcern: document.getElementById("healthConcern").value
         };
 
         try {
