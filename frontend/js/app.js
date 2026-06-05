@@ -21,7 +21,7 @@ if (loginForm) {
 
             const response =
                 await fetch(
-                    "http://localhost:3000/login",
+                    "https://fourth-sem-micro-project.onrender.com/login",
                     {
                         method: "POST",
                         headers: {
@@ -43,6 +43,10 @@ if (loginForm) {
                 localStorage.setItem(
                     "ngo",
                     result.ngoName
+                );
+                localStorage.setItem(
+                    "ngoId",
+                    result.ngoId
                 );
 
                 alert("Login Successful");
@@ -67,22 +71,31 @@ if (driveForm) {
         e.preventDefault();
 
         const drive = {
+
+            ngo: localStorage.getItem("ngoId"),
+
             title: document.getElementById("driveTitle").value,
+
             location: document.getElementById("driveLocation").value,
+
             institution: document.getElementById("driveInstitution").value,
+
             date: document.getElementById("driveDate").value,
+
             month: new Date(
                 document.getElementById("driveDate").value
             ).toLocaleString("default", {
                 month: "long"
             }),
+
             description: document.getElementById("driveDescription").value
+
         };
-        
+
         try {
 
             const response = await fetch(
-                "http://localhost:3000/create-drive",
+                "https://fourth-sem-micro-project.onrender.com/create-drive",
                 {
                     method: "POST",
                     headers: {
@@ -186,7 +199,7 @@ if (drivesContainer) {
         }
     }
 
-    async function loadDrives(url = "http://localhost:3000/drives") {
+    async function loadDrives(url = "https://fourth-sem-micro-project.onrender.com/drives") {
 
         try {
 
@@ -209,56 +222,56 @@ if (drivesContainer) {
 
     function renderDrives(drives) {
 
-        drivesContainer.innerHTML = "";
+    drivesContainer.innerHTML = "";
 
-        if (drives.length === 0) {
+    if (drives.length === 0) {
 
-            drivesContainer.innerHTML =
-                "<p>No healthcare drives found.</p>";
+        drivesContainer.innerHTML =
+            "<p>No healthcare drives found.</p>";
 
-            return;
-        }
-
-        drives.forEach((drive) => {
-
-            const card =
-                document.createElement("div");
-
-            card.classList.add("drive-card");
-
-            card.innerHTML = `
-                <h3>${drive.title}</h3>
-
-                <p>
-                    <strong>Location:</strong>
-                    ${drive.location}
-                </p>
-
-                <p>
-                    <strong>Date:</strong>
-                    ${drive.date}
-                </p>
-
-                <p>
-                    <strong>Institution:</strong>
-                    ${drive.institution || "N/A"}
-                </p>
-
-                <p>${drive.description}</p>
-
-                <a href="volunteer.html">
-                    <button>Join as Volunteer</button>
-                </a>
-
-                <a href="patient.html">
-                    <button>Register as Patient</button>
-                </a>
-            `;
-
-            drivesContainer.appendChild(card);
-
-        });
+        return;
     }
+
+    drives.forEach((drive) => {
+
+        const card =
+            document.createElement("div");
+
+        card.classList.add("drive-card");
+
+        card.innerHTML = `
+            <h3>${drive.title}</h3>
+
+            <p>
+                <strong>Location:</strong>
+                ${drive.location}
+            </p>
+
+            <p>
+                <strong>Date:</strong>
+                ${drive.date}
+            </p>
+
+            <p>
+                <strong>Institution:</strong>
+                ${drive.institution || "N/A"}
+            </p>
+
+            <p>${drive.description}</p>
+
+            <a href="volunteer.html?driveId=${drive._id}">
+                <button>Join as Volunteer</button>
+            </a>
+
+            <a href="patient.html?driveId=${drive._id}">
+                <button>Register as Patient</button>
+            </a>
+        `;
+
+        drivesContainer.appendChild(card);
+
+    });
+}
 
 
     if (filterBtn) {
@@ -269,7 +282,7 @@ if (drivesContainer) {
                 dropdown.value;
 
             let url =
-                "http://localhost:3000/drives";
+                "https://fourth-sem-micro-project.onrender.com/drives";
 
             if (value && filterType) {
 
@@ -314,7 +327,7 @@ if (signupForm) {
 
             const response =
                 await fetch(
-                    "http://localhost:3000/signup",
+                    "https://fourth-sem-micro-project.onrender.com/signup",
                     {
                         method: "POST",
                         headers: {
@@ -342,3 +355,188 @@ if (signupForm) {
         }
     );
 }
+async function loadMyDrives() {
+
+    const container =
+        document.getElementById("myDrives");
+
+    if (!container) return;
+
+    try {
+
+        const response =
+            await fetch(
+                "https://fourth-sem-micro-project.onrender.com/my-drives"
+            );
+
+        const drives =
+            await response.json();
+
+        container.innerHTML = "";
+
+        drives.forEach(drive => {
+
+            const card =
+                document.createElement("div");
+
+            card.classList.add("drive-card");
+
+            card.innerHTML = `
+                <h3>${drive.title}</h3>
+
+                <p>
+                    ${drive.location}
+                </p>
+
+                <p>
+                    ${drive.institution}
+                </p>
+
+                <p>
+                    ${drive.month}
+                </p>
+
+                <button
+                    onclick="viewVolunteers('${drive._id}')"
+                >
+                    View Volunteers
+                </button>
+
+                <button
+                    onclick="viewPatients('${drive._id}')"
+                >
+                    View Patients
+                </button>
+            `;
+
+            container.appendChild(card);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+loadMyDrives();
+
+const volunteerForm =
+    document.getElementById("volunteerForm");
+
+if (volunteerForm) {
+
+    volunteerForm.addEventListener(
+        "submit",
+        async function(e) {
+
+            e.preventDefault();
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+            const driveId =
+                params.get("driveId");
+
+            const volunteer = {
+
+                drive: driveId,
+
+                volunteerName:
+                    document.getElementById(
+                        "volunteerName"
+                    ).value,
+
+                contact:
+                    document.getElementById(
+                        "volunteerContact"
+                    ).value,
+
+                skills:
+                    document.getElementById(
+                        "volunteerSkills"
+                    ).value
+            };
+
+            const response =
+                await fetch(
+                    "https://fourth-sem-micro-project.onrender.com/register-volunteer",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                            "application/json"
+                        },
+                        body: JSON.stringify(
+                            volunteer
+                        )
+                    }
+                );
+
+            const result =
+                await response.json();
+
+            alert(result.message);
+        }
+    );
+}
+
+
+async function viewVolunteers(driveId) {
+  document.getElementById("modalTitle").textContent = "Volunteers";
+  document.getElementById("modalContent").innerHTML = "<p>Loading...</p>";
+  document.getElementById("modalOverlay").style.display = "flex";
+
+  const response = await fetch(`https://fourth-sem-micro-project.onrender.com/volunteers/${driveId}`);
+  const volunteers = await response.json();
+  const content = document.getElementById("modalContent");
+
+  if (volunteers.length === 0) {
+    content.innerHTML = "<p style='color:#888;'>No volunteers registered yet.</p>";
+    return;
+  }
+
+  content.innerHTML = volunteers.map(v => `
+    <div style="border:1px solid #eee; border-radius:8px; padding:12px; margin-bottom:12px;">
+      <p style="margin:0 0 4px; font-weight:500;">${v.volunteerName}</p>
+      <p style="margin:0 0 4px; color:#555; font-size:14px;">📞 ${v.contact}</p>
+      <p style="margin:0; color:#555; font-size:14px;">🛠 ${v.skills}</p>
+    </div>
+  `).join("");
+}
+
+async function viewPatients(driveId) {
+  document.getElementById("modalTitle").textContent = "Patients";
+  document.getElementById("modalContent").innerHTML = "<p>Loading...</p>";
+  document.getElementById("modalOverlay").style.display = "flex";
+
+  const response = await fetch(`https://fourth-sem-micro-project.onrender.com/patients/${driveId}`);
+  const patients = await response.json();
+  const content = document.getElementById("modalContent");
+
+  if (patients.length === 0) {
+    content.innerHTML = "<p style='color:#888;'>No patients registered yet.</p>";
+    return;
+  }
+
+  content.innerHTML = patients.map(p => `
+    <div style="border:1px solid #eee; border-radius:8px; padding:12px; margin-bottom:12px;">
+      <p style="margin:0 0 4px; font-weight:500;">${p.patientName}</p>
+      <p style="margin:0 0 4px; color:#555; font-size:14px;">Age: ${p.age}</p>
+      <p style="margin:0; color:#555; font-size:14px;">Concern: ${p.healthConcern}</p>
+    </div>
+  `).join("");
+}
+
+function closeModal() {
+  document.getElementById("modalOverlay").style.display = "none";
+}
+
+
+document.getElementById("modalOverlay").addEventListener("click", function(e) {
+  if (e.target === this) closeModal();
+});
