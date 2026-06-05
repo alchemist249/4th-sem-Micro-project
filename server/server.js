@@ -175,12 +175,10 @@ app.post("/signup", async (req, res) => {
         });
 
     } catch (error) {
-
         console.error(error);
-
         res.status(500).json({
             success: false,
-            message: "Server Error"
+            message: error.message // 💡 Changed from "Server Error" to show the real culprit!
         });
     }
 });
