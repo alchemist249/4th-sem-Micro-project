@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const NGO = require("./models/NGO");
 const Drive = require("./models/Drive");
-const Volunteer = require("./models/volunteer");
-const Patient = require("./models/patient");
+const Volunteer = require("./models/Volunteer");
+const Patient = require("./models/Patient");
 
 const app = express();
 mongoose.connect(
@@ -300,3 +300,4 @@ app.listen(3000, () => {
     console.log("Server running on port 3000");
 
 });
+//debugginf
