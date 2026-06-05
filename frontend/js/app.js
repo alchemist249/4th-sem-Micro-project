@@ -537,6 +537,6 @@ function closeModal() {
 }
 
 
-document.getElementById("modalOverlay").addEventListener("click", function(e) {
+document.getElementById("modalOverlay")?.addEventListener("click", function(e) {
   if (e.target === this) closeModal();
 });
