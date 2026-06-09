@@ -1,3 +1,4 @@
+// import packages and db modls
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
@@ -8,6 +9,8 @@ const Volunteer = require("./models/Volunteer");
 const Patient = require("./models/Patient");
 
 const app = express();
+
+// db conntion stuff
 mongoose.connect(
     process.env.MONGODB_URI
 )
@@ -18,23 +21,20 @@ mongoose.connect(
     console.error(err);
 });
 
+// middlewere for json and cross origin api calls
 app.use(express.json());
 app.use(cors());
 
 
-
+// check if server alive
 app.get("/", (req, res) => {
-
     res.send("HealthBridge Backend Running");
-
 });
 
 
-
+// get all drives and filter them if query exists
 app.get("/drives", async (req, res) => {
-
     try {
-
         let drives = await Drive.find();
 
         const {
@@ -43,6 +43,7 @@ app.get("/drives", async (req, res) => {
             month
         } = req.query;
 
+        // filter by loc, inst, or month
         if (location) {
             drives = drives.filter(
                 drive => drive.location === location
@@ -64,9 +65,7 @@ app.get("/drives", async (req, res) => {
         res.json(drives);
 
     } catch (error) {
-
         console.error(error);
-
         res.status(500).json({
             success: false
         });
@@ -74,11 +73,9 @@ app.get("/drives", async (req, res) => {
 });
 
 
-
+// save a new driv to db
 app.post("/create-drive", async (req, res) => {
-
     try {
-
         await Drive.create(req.body);
 
         res.json({
@@ -87,9 +84,7 @@ app.post("/create-drive", async (req, res) => {
         });
 
     } catch (error) {
-
         console.error(error);
-
         res.status(500).json({
             success: false,
             message: "Server Error"
@@ -97,12 +92,10 @@ app.post("/create-drive", async (req, res) => {
     }
 });
 
+// save volunteer to databse
 app.post("/register-volunteer", async (req, res) => {
-
     try {
-
         const volunteer = new Volunteer(req.body);
-
         await volunteer.save();
 
         res.status(201).json({
@@ -111,20 +104,16 @@ app.post("/register-volunteer", async (req, res) => {
         });
 
     } catch (error) {
-
         res.status(500).json({
             message: error.message
         });
-
     }
-
 });
+
+// save patint data to database
 app.post("/register-patient", async (req, res) => {
-
     try {
-
         const patient = new Patient(req.body);
-
         await patient.save();
 
         res.status(201).json({
@@ -133,30 +122,24 @@ app.post("/register-patient", async (req, res) => {
         });
 
     } catch (error) {
-
         res.status(500).json({
             message: error.message
         });
-
     }
-
 });
 
+// register new ngo account check if email exits
 app.post("/signup", async (req, res) => {
-
     try {
-
         const {
             ngoName,
             email,
             password
         } = req.body;
 
-        const existingNGO =
-            await NGO.findOne({ email });
+        const existingNGO = await NGO.findOne({ email });
 
         if (existingNGO) {
-
             return res.json({
                 success: false,
                 message: "Email already registered"
@@ -178,30 +161,27 @@ app.post("/signup", async (req, res) => {
         console.error(error);
         res.status(500).json({
             success: false,
-            message: error.message // 💡 Changed from "Server Error" to show the real culprit!
+            message: error.message 
         });
     }
 });
 
 
-
+// login authentication hndler
 app.post("/login", async (req, res) => {
-
     try {
-
         const {
             email,
             password
         } = req.body;
 
-        const ngo =
-            await NGO.findOne({
-                email,
-                password
-            });
+        // check clear text creds (temporary fix?)
+        const ngo = await NGO.findOne({
+            email,
+            password
+        });
 
         if (!ngo) {
-
             return res.json({
                 success: false,
                 message: "Invalid Credentials"
@@ -215,9 +195,7 @@ app.post("/login", async (req, res) => {
         });
 
     } catch (error) {
-
         console.error(error);
-
         res.status(500).json({
             success: false,
             message: "Server Error"
@@ -225,74 +203,56 @@ app.post("/login", async (req, res) => {
     }
 });
 
+// get all drives for ngo dashboard page
 app.get("/my-drives", async (req, res) => {
-
     try {
-
-        const drives =
-            await Drive.find();
-
+        const drives = await Drive.find();
         res.json(drives);
 
     } catch (error) {
-
         res.status(500).json({
             message: error.message
         });
-
     }
-
 });
 
+// get volunters for specific drive id
 app.get(
     "/volunteers/:driveId",
     async (req, res) => {
-
         try {
-
-            const volunteers =
-                await Volunteer.find({
-                    drive:
-                        req.params.driveId
-                });
+            const volunteers = await Volunteer.find({
+                drive: req.params.driveId
+            });
 
             res.json(volunteers);
 
         } catch (error) {
-
             res.status(500).json({
                 message: error.message
             });
-
         }
-
 });
 
+// fetch patients list by drive id 
 app.get(
     "/patients/:driveId",
     async (req, res) => {
-
         try {
-
-            const patients =
-                await Patient.find({
-                    drive:
-                        req.params.driveId
-                });
+            const patients = await Patient.find({
+                drive: req.params.driveId
+            });
 
             res.json(patients);
 
         } catch (error) {
-
             res.status(500).json({
                 message: error.message
             });
-
         }
-
 });
 
-
+// start the express servr
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {

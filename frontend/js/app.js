@@ -1,10 +1,11 @@
-
+// patint submit stuff
 const patientForm = document.getElementById("patientForm");
 
 if (patientForm) {
     patientForm.addEventListener("submit", async function (e) {
         e.preventDefault();
 
+        // extract id from query params
         const params = new URLSearchParams(window.location.search);
         const driveId = params.get("driveId");
 
@@ -21,6 +22,7 @@ if (patientForm) {
         };
 
         try {
+            // post payload to server
             const response = await fetch(
                 "https://fourth-sem-micro-project.onrender.com/register-patient",
                 {
@@ -43,6 +45,7 @@ if (patientForm) {
     });
 }
 
+// logn handler 
 const loginForm = document.getElementById("loginForm");
 
 if (loginForm) {
@@ -64,6 +67,7 @@ if (loginForm) {
 
             const result = await response.json();
 
+            // save to local storage if true
             if (result.success) {
                 localStorage.setItem("ngo", result.ngoName);
                 localStorage.setItem("ngoId", result.ngoId);
@@ -79,6 +83,7 @@ if (loginForm) {
     });
 }
 
+// create a new driv
 const driveForm = document.getElementById("driveForm");
 
 if (driveForm) {
@@ -91,6 +96,7 @@ if (driveForm) {
             location: document.getElementById("driveLocation").value,
             institution: document.getElementById("driveInstitution").value,
             date: document.getElementById("driveDate").value,
+            // get month name from string date
             month: new Date(document.getElementById("driveDate").value).toLocaleString("default", {
                 month: "long"
             }),
@@ -117,6 +123,7 @@ if (driveForm) {
     });
 }
 
+// main dashboard container for displaying cards
 const drivesContainer = document.getElementById("drivesContainer");
 
 if (drivesContainer) {
@@ -126,6 +133,7 @@ if (drivesContainer) {
     const filterTitle = document.getElementById("filterTitle");
     const filterBtn = document.getElementById("applyFilter");
     
+    // update dropdwon content dynamically based on URL query
     if (dropdown && filterTitle) {
         if (filterType === "institution") {
             filterTitle.textContent = "Browse By Institution";
@@ -134,6 +142,7 @@ if (drivesContainer) {
                 <option value="BVEC">BVEC</option>
                 <option value="NIT Silchar">NIT Silchar</option>
                 <option value="Assam University">Assam University</option>
+                
             `;
         } else if (filterType === "location") {
             filterTitle.textContent = "Browse By Location";
@@ -152,12 +161,14 @@ if (drivesContainer) {
                 <option value="August">August</option>
             `;
         } else {
+            // hide filter if none selected
             dropdown.style.display = "none";
             if (filterBtn) filterBtn.style.display = "none";
             filterTitle.textContent = "All Healthcare Drives";
         }
     }
 
+    // fech data from backend
     async function loadDrives(url = "https://fourth-sem-micro-project.onrender.com/drives") {
         try {
             const response = await fetch(url);
@@ -169,6 +180,7 @@ if (drivesContainer) {
         }
     }
 
+    // make the HTML cards for the UI
     function renderDrives(drives) {
         drivesContainer.innerHTML = "";
 
@@ -193,6 +205,7 @@ if (drivesContainer) {
         });
     }
 
+    // filter button click logic
     if (filterBtn) {
         filterBtn.addEventListener("click", () => {
             const value = dropdown.value;
@@ -207,6 +220,7 @@ if (drivesContainer) {
     loadDrives();
 }
 
+// register new ngo account
 const signupForm = document.getElementById("signupForm");
 
 if (signupForm) {
@@ -240,6 +254,7 @@ if (signupForm) {
     });
 }
 
+// get my drives for ngo dashbord
 async function loadMyDrives() {
     const container = document.getElementById("myDrives");
     if (!container) return;
@@ -268,6 +283,7 @@ async function loadMyDrives() {
 }
 loadMyDrives();
 
+// get volunteer data and submit
 const volunteerForm = document.getElementById("volunteerForm");
 
 if (volunteerForm) {
@@ -307,6 +323,7 @@ if (volunteerForm) {
     });
 }
 
+// popup for open volunters list
 async function viewVolunteers(driveId) {
     document.getElementById("modalTitle").textContent = "Volunteers";
     document.getElementById("modalContent").innerHTML = "<p>Loading...</p>";
@@ -334,6 +351,7 @@ async function viewVolunteers(driveId) {
     }
 }
 
+// popup for open patints list
 async function viewPatients(driveId) {
     document.getElementById("modalTitle").textContent = "Patients";
     document.getElementById("modalContent").innerHTML = "<p>Loading...</p>";
@@ -361,10 +379,12 @@ async function viewPatients(driveId) {
     }
 }
 
+// close popup windows
 function closeModal() {
     document.getElementById("modalOverlay").style.display = "none";
 }
 
+// close modal if user click outsid container
 document.getElementById("modalOverlay")?.addEventListener("click", function(e) {
     if (e.target === this) closeModal();
 });
