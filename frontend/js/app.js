@@ -1,4 +1,4 @@
-// patint submit stuff
+// patient submit stuff
 const patientForm = document.getElementById("patientForm");
 
 if (patientForm) {
